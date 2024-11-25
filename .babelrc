@@ -1,0 +1,7 @@
+{
+  "presets": ["@babel/preset-env"], //Chuyển đổi mã JS
+  "plugins": [
+    ["@babel/transform-runtime"],
+    ["module-resolver", { "alias": { "~": "./src" } }] //Cấu hình đường dẫn
+  ]
+}
