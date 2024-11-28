@@ -10,10 +10,12 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser())
 
+connection();
+
+//Router
 const userRoute = require('~/routes/API/userRoute')
 const auth = require('~/routes/API/authRoute')
 
-connection();
 
 //use route
 app.use('/api/user', userRoute)

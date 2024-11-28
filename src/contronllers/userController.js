@@ -21,8 +21,25 @@ const getAllUsers = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id)
+    const user = await User.findByIdAndDelete(req.params.id)
     res.status(200).json("Delete successfully")
+  } catch (error) {
+    res.status(500).json(error)
+  }
+}
+
+const updateUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    if (!user) {
+      return res.status(404).json("User not found")
+    }
+    const updateUser = await User.findByIdAndUpdate(
+       req.params.id,
+      { $set: req.body },
+      { new: true }
+    )
+    res.status(200).json("Update successfully")
   } catch (error) {
     res.status(500).json(error)
   }
@@ -31,7 +48,8 @@ const deleteUser = async (req, res) => {
 const userController = {
   createUser,
   getAllUsers,
-  deleteUser
+  deleteUser,
+  updateUser
 }
 
 module.exports = userController

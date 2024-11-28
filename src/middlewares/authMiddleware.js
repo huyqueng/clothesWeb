@@ -17,10 +17,10 @@ const verifyToken = (req, res, next) => {
 
 const verifyAdmin = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user.id == req.params.id || req.user.admin) {
+    if (req.user.role === "admin") {
       next()
     }
-    else res.status(403).json("You're not allowed to delete other")
+    else res.status(403).json("You're not allowed")
   })
 }
 

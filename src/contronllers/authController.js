@@ -30,7 +30,7 @@ const registerUser = async (req, res) => {
 //Generate access token & refesh token
 const generateAccessToken = (user) => {
   return jwt.sign(
-    { id: user.id, admin: user.admin },
+    { id: user.id, role: user.role },
     process.env.JWT_ACCESS_KEY,
     { expiresIn: '2d' }
   )
@@ -73,6 +73,7 @@ const login = async (req, res) => {
     res.status(500).json("Internal Server Error" )
   }
 }
+
 
 //Logout
 const logout = (req, res) => {
