@@ -3,8 +3,8 @@ const connection = require('~/config/mongodb')
 const app = express()
 const cookieParser = require('cookie-parser')
 
-const host = 'localhost'
-const port = 3000
+const host = process.env.HOST
+const port = process.env.PORT
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
