@@ -2,6 +2,9 @@ const express = require('express')
 const connection = require('~/config/mongodb')
 const app = express()
 const cookieParser = require('cookie-parser')
+const userRoute = require('~/routes/API/userRoute')
+const authRoute = require('~/routes/API/authRoute')
+const categoryRoute = require('~/routes/API/categoryRoute')
 
 const host = process.env.HOST
 const port = process.env.PORT
@@ -12,14 +15,10 @@ app.use(cookieParser())
 
 connection();
 
-//Router
-const userRoute = require('~/routes/API/userRoute')
-const auth = require('~/routes/API/authRoute')
-
-
-//use route
+//Routes
 app.use('/api/user', userRoute)
-app.use('/api/auth', auth)
+app.use('/api/auth', authRoute)
+app.use('/api/category', categoryRoute)
 
 app.listen(port, () => {
   console.log("Server is running")

@@ -8,6 +8,6 @@ router.post('/login', login)
 // //Refesh
 // router.post('/refesh', reqRefeshToken)
 
-const auth = router
+const authRoute = router
 
-module.exports = auth
+module.exports = authRoute
