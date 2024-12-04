@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema(
     fullName: { type: String, required: true, minlength: 3, maxlength: 30 },
     phone: { type: String, required: true, minlength: 10, maxlength: 12 },
     email: { type: String, required: true, maxlength: 50 },
-    role: { type: String, enum: ['admin', 'staff', 'customer'], default: 'customer' },
+    address: { type: String, required: true },
+    role: { type: String, enum: ['admin', 'staff', 'customer'], default: 'customer' }
     // admin: {type: Boolean, default: false},
     // createdAt: { type: Date, default: Date.now },
     // updatedAt: { type: Date, default: Date.now },
