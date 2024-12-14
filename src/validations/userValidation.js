@@ -2,7 +2,7 @@ const Joi = require('joi')
 
 const createNew = async (req, res, next) => {
   const correctCondition = Joi.object({
-    username: Joi.string().required().unique().min(6).max(20).trim().pattern(/^[a-zA-Z0-9]+$/).messages({
+    username: Joi.string().required().min(6).max(20).trim().pattern(/^[a-zA-Z0-9]+$/).messages({
       'any.required': 'Tên tài khoản là bắt buộc.',
       'string.empty': 'Tên toài khoản không được để trống.',
       'string.min': 'Tên tài khoản phải có ít nhất 6 ký tự.',
