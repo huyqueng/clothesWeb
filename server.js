@@ -1,6 +1,7 @@
 const express = require('express')
-const connection = require('~/config/mongodb')
 const app = express()
+
+const connection = require('~/config/mongodb')
 const cookieParser = require('cookie-parser')
 const userRoute = require('~/routes/API/userRoute')
 const authRoute = require('~/routes/API/authRoute')
@@ -10,10 +11,12 @@ const productRoute = require('~/routes/API/productRoute')
 const host = process.env.HOST
 const port = process.env.PORT
 
+//Middlewares
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cookieParser())
+app.use(cookieParser()) 
 
+//Connect mongo
 connection();
 
 //Routes

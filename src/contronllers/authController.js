@@ -1,49 +1,18 @@
 require('dotenv').config()
 const User = require('~/models/userModel')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const generateAccessToken = require('~/ultils/token')
+const { register } = require('~/services/authService')
 
 //Register
 const registerUser = async (req, res) => {
   try {
-    //Hash password
-    const salt = await bcrypt.genSalt(10)
-    const hashed = await bcrypt.hash(req.body.password, salt)
-
-    //Create new user
-    const newUser = await new User({
-      username: req.body.username,
-      password: hashed,
-      fullName: req.body.fullName,
-      phone: req.body.phone,
-      email: req.body.email,
-      address: req.body.address,
-      role: 'customer'
-    })
-
-    const user = await newUser.save()
+    const user = await register(req.body)
     res.status(201).json({ message: 'Register successfully', data: user })
   } catch (error) {
-    res.status(500).json({ error: error })
+    res.status(500).json({ message: "Internal Server Error", error: error })
   }
 }
-
-//Generate access token & refesh token
-const generateAccessToken = (user) => {
-  return jwt.sign(
-    { id: user.id, role: user.role },
-    process.env.JWT_ACCESS_KEY,
-    { expiresIn: '2d' }
-  )
-}
-
-// const generateRefreshToken = (user) => {
-//   return jwt.sign(
-//     { id: user.id, admin: user.admin },
-//     process.env.JWT_REFRESH_TOKEN,
-//     { expiresIn: '1m' }
-//   )
-// }
 
 //Login
 const login = async (req, res) => {

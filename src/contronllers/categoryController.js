@@ -12,7 +12,7 @@ const createCateory = async (req, res) => {
 
 const getAllCategories = async (req, res) => {
   try {
-    const categories = await Category.find()
+    const categories = await Category.find().populate('products')
     res.status(200).json({ message: 'Got categories successfully' , data: categories })
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error', error: error })

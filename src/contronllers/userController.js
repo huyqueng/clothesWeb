@@ -1,13 +1,12 @@
 const User = require('~/models/userModel')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const { userValidation } = require('~/validations/userValidation')
 
 const createUser = async (req, res) => {
   try {
     //Hash password
     const salt = await bcrypt.genSalt(10)
     const hashed = await bcrypt.hash(req.body.password, salt)
-
     const newUser = new User({
       username: req.body.username,
       password: hashed,
@@ -17,6 +16,7 @@ const createUser = async (req, res) => {
       address: req.body.address,
       role: req.body.role
     })
+
     const user = await newUser.save()
     res.status(200).json({ message: 'Created new user successfully' , data: user })
   } catch (error) {

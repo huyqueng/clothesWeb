@@ -1,8 +1,8 @@
 const { registerUser, login } = require('~/contronllers/authController')
+const  userValidation  = require('~/validations/userValidation')
 const router = require('express').Router()
 
-router.post('/register', registerUser)
-
+router.post('/register',userValidation.createNew , registerUser)
 router.post('/login', login)
 
 // //Refesh
