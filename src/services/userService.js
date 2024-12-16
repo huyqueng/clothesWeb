@@ -11,10 +11,10 @@ const createNewUser = async (user) => {
 }
 
 const findUserById = async (userId) => {
-  return await User.findById(id)
+  return await User.findById(userId)
 }
 
-const getAllUsers = async () => {
+const getUsers = async () => {
   return await User.find()
 }
 
@@ -29,7 +29,7 @@ const updateUserById = async (userId, user) => {
 module.exports = {
   createNewUser,
   findUserById,
-  getAllUsers,
+  getUsers,
   deleteUserById,
   updateUserById
 }
