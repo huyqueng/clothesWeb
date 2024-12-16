@@ -1,14 +1,12 @@
-  const multer = require('multer')
   const Category = require('~/models/categoryModel')
-  // const upload = multer({ dest: 'uploads/' })
   const { Product, ProductVariant } = require('~/models/productModel')
 
   const createProduct = async (req, res) => {
     try {
-      const filePath = req.files && req.files[0] ? req.files[0].path : null;
+      const filePaths = req.files.map(file => file.path)
       const product = new Product({
         ...req.body,
-        img: filePath
+        img: filePaths
       })
       const saveProduct = await product.save()
       if (req.body.category) {
@@ -41,7 +39,17 @@
       if (!product) {
         return res.status(404).json({ message: 'Product not found' })
       }
-      const updateProduct = await Product.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+      let updateFields = { ...req.body }
+      if (req.files) {
+        const newImgPaths = req.files.map(file => file.path)
+        updateFields.img = newImgPaths
+      }    
+      const updateProduct = await Product.findByIdAndUpdate(
+        req.params.id,
+        { $set: updateFields },
+        { new: true }
+      )
+
       res.status(200).json({ message: 'Updated successfully', data: updateProduct })
     } catch (error) {
       res.status(500).json({ message: 'Internal Server Error', error: error })

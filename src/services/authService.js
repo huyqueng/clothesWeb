@@ -18,7 +18,19 @@ const register = async (user) => {
   return await newUser.save()
 }
 
+//Check user
+const findUserByUsername = async (username) => {
+  return await User.findOne({ username })
+}
+
+//Check password
+const isPasswordValid = async (inputPassword, hashedPassword) => {
+  return bcrypt.compare(inputPassword, hashedPassword)
+}
+
 module.exports = {
   hashPassword,
-  register
+  register,
+  findUserByUsername,
+  isPasswordValid
 }

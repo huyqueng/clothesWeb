@@ -1,8 +1,6 @@
 require('dotenv').config()
-const User = require('~/models/userModel')
-const bcrypt = require('bcrypt')
 const generateAccessToken = require('~/ultils/token')
-const { register } = require('~/services/authService')
+const { register, findUserByUsername, isPasswordValid } = require('~/services/authService')
 
 //Register
 const registerUser = async (req, res) => {
@@ -17,17 +15,18 @@ const registerUser = async (req, res) => {
 //Login
 const login = async (req, res) => {
   try {
+    const { username, password } = req.body
     //Check username
-    const user = await User.findOne({ username: req.body.username })
+    const user = await findUserByUsername(username)
     if (!user) {
       res.status(404).json({ message: 'Wrong username or username is not exist' })
     }
     //Checkpassword
-    const validPassword = await bcrypt.compare(req.body.password, user.password)
+    const validPassword = await isPasswordValid(password, user.password)
     if (!validPassword) {
       res.status(404).json("Wrong password")
     }
-
+    //Generate token
     if (user && validPassword) {
       const accessToken = generateAccessToken(user)
       // const refreshToken = generateRefreshToken(user)
@@ -46,11 +45,12 @@ const login = async (req, res) => {
 
 //Logout
 const logout = (req, res) => {
-  res.clearCookie('refreshToken')
+  res.clearCookie('accessToken')
 }
 
 module.exports = {
   registerUser,
   login,
+  logout
   // reqRefeshToken
 }

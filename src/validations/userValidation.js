@@ -34,13 +34,13 @@ const createNew = async (req, res, next) => {
       'string.empty': 'Địa chỉ không được để trống.',
     }),
     role: Joi.string().valid('admin', 'staff', 'customer').default('customer').messages({
-      'any.only': 'Role không hợp lệ, phải là một trong ba giá trị: admin, staff, customer.'
+      'any.only': 'Role không hợp lệ, phải là một trong ba vị trí: admin, staff, customer.'
     })
   })
 
   try {
     await correctCondition.validateAsync(req.body, { abortEarly: false }) //abortEarly validate toàn bộ correctCondition
-    next() //validate dữ liệu hợp lệ thì cho req sang controller
+    next()
   } catch (error) {
     return res.status(422).json({
     message: 'Validation Error',
