@@ -16,9 +16,14 @@ const addProductToCategory = async (categoryId, productId) => {
       throw new Error('Category not found')
     }
     await category.updateOne({ $push: { products: productId } })
-  }
+}
+
+const getProducts = async () => {
+  return await Product.find()
+}
 
 module.exports = {
   createNewProduct,
-  addProductToCategory
+  addProductToCategory,
+  getProducts
 }
