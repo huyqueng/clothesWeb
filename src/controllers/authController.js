@@ -19,12 +19,12 @@ const login = async (req, res) => {
     //Check username
     const user = await findUserByUsername(username)
     if (!user) {
-      res.status(404).json({ message: 'Wrong username or username is not exist' })
+      return res.status(404).json({ message: 'Wrong username or username is not exist' })
     }
     //Checkpassword
     const validPassword = await isPasswordValid(password, user.password)
     if (!validPassword) {
-      res.status(404).json("Wrong password")
+      return res.status(404).json("Wrong password")
     }
     //Generate token
     if (user && validPassword) {

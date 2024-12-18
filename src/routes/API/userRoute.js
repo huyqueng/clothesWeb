@@ -1,5 +1,5 @@
   const router = require('express').Router()
-  const userController = require('~/contronllers/userController')
+  const userController = require('~/controllers/userController')
   const authMiddleware = require('~/middlewares/authMiddleware')
   const  userValidation  = require('~/validations/userValidation')
 

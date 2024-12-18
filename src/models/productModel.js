@@ -8,13 +8,13 @@ const productSchema = new mongoose.Schema({
   img: { type: Array, required: true }
 },{ timestamps: true })
 
-// const variantSchema = new mongoose.Schema({
-//   productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true  },
-//   size: { type: Number },
-//   color: { type: String },
-//   stock: { type: Number, min: 0, default: 0 },
-//   isAccessory: { type: Boolean, default: false }
-// }, { timestamps: true })
+const variantSchema = new mongoose.Schema({
+  productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true  },
+  size: { type: Number },
+  color: { type: String },
+  stock: { type: Number, min: 0, default: 0 },
+  isAccessory: { type: Boolean, default: false }
+}, { timestamps: true })
 
 const Product = mongoose.model('Product', productSchema)
 // const ProductVariant = mongoose.model('ProductVariant', variantSchema)

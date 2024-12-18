@@ -1,4 +1,4 @@
-const { registerUser, login, logout } = require('~/contronllers/authController')
+const { registerUser, login, logout } = require('~/controllers/authController')
 const  userValidation  = require('~/validations/userValidation')
 const router = require('express').Router()
 

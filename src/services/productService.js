@@ -1,5 +1,6 @@
 const { Product } = require('~/models/productModel')
 const { findCategoryById } = require('./categoryService')
+const fs = require('fs')
 
 const createNewProduct = async (product, filePaths) => {
   const newProduct = new Product({
@@ -22,8 +23,34 @@ const getProducts = async () => {
   return await Product.find()
 }
 
+const findProductById = async (productId) => {
+  return await Product.findById(productId)
+}
+
+const removeImg = (images) => {
+  images.forEach((filePath) => {
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error(`Error removing file: ${filePath}`, err);
+      }
+    })
+  })
+}
+
+const updateProductById = async (productId, updateFields) => {
+  return await Product.findByIdAndUpdate(productId, { $set: updateFields }, { new: true })
+}
+
+const deleteProductById = async (productId) => {
+  return await Product.findByIdAndDelete(productId)
+}
+
 module.exports = {
   createNewProduct,
   addProductToCategory,
-  getProducts
+  getProducts,
+  findProductById,
+  removeImg,
+  updateProductById,
+  deleteProductById
 }

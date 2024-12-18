@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const categoryController = require('~/contronllers/categoryController')
+const categoryController = require('~/controllers/categoryController')
 const authMiddleware = require('~/middlewares/authMiddleware')
 
 router.post('/create-category', authMiddleware.verifyAdmin, categoryController.createCateory)
