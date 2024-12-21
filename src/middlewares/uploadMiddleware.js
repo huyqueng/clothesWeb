@@ -15,14 +15,14 @@ const fileFilter = (req, file, cb) => {
     cb(null, true)
   }
   else {
-    cb(new Error('Only image files are allowed'))
+    cb(new Error('Only image files are allowed (JPG, PNG, JPEG, GIF)'), false)
   }
 }
 
 const upload = multer({
   storage: storage,
   fileFilter: fileFilter,
-  limits: { filenoSize: 5 * 1024 * 1024 }
+  limits: { fileSize: 5 * 1024 * 1024 } //5MB
 })
 
 module.exports = upload

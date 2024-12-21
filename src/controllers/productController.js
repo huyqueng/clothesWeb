@@ -2,7 +2,7 @@ const { createNewProduct, addProductToCategory, getProducts, removeImg, updatePr
 
 const createProduct = async (req, res) => {
   try {
-    const filePaths = req.files.map(file => file.path) || []
+    const filePaths = req.files.map(file => file.path) 
     const product = await createNewProduct(req.body, filePaths)
     if (req.body.category) {
       try {
@@ -11,9 +11,9 @@ const createProduct = async (req, res) => {
         return res.status(404).json({ message: error.message })
       }
     }
-    return res.status(201).json({ message: 'Product created successfully', data: product })
+    res.status(201).json({ message: 'Product created successfully', data: product })
   } catch (error) {
-    return res.status(500).json({ message: 'Internal Server Error', error: error })
+    res.status(500).json({ message: 'Internal Server Error', error: error })
   }
 }
 
@@ -40,6 +40,9 @@ const updateProduct = async (req, res) => {
       updateFields.img = newImgPaths
     }
     const updatedProduct = await updateProductById(req.params.id, updateFields)
+    if (!updatedProduct) {
+      return res.status(400).json({ message: 'Product not found' })
+    }
     res.status(200).json({ message: 'Updated successfully', data: updatedProduct })
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error', error: error })
@@ -49,6 +52,9 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     const product = await deleteProductById(req.params.id)
+    if (!product) {
+      return res.status(400).json({ message: 'Product not found' })
+    }
     if (product.img) {
       removeImg(product.img)
     }

@@ -5,6 +5,10 @@ const { register, findUserByUsername, isPasswordValid } = require('~/services/au
 //Register
 const registerUser = async (req, res) => {
   try {
+    const existingUsername = findUserByUsername(req.body.username)
+    if (existingUsername) {
+      return res.status(400).json({ message:'Username already exists. Please choose a different username.' })
+    }
     const user = await register(req.body)
     res.status(201).json({ message: 'Register successfully', data: user })
   } catch (error) {
