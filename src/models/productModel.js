@@ -12,9 +12,9 @@ const productSchema = new mongoose.Schema({
 //Product variant
 const variantSchema = new mongoose.Schema({
   productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true  },
-  size: { type: String },
-  color: { type: String },
-  stock: { type: Number, min: 0, default: 0 },
+  size: { type: String, required: true },
+  color: { type: String, required: true },
+  stock: { type: Number, min: 0, default: 0, required: true },
   isAccessory: { type: Boolean, default: false }
 }, { timestamps: true })
 
