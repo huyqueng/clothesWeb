@@ -1,7 +1,7 @@
-const { Product, ProductVariant } = require("~/models/productModel")
+const { ProductVariant } = require("~/models/productModel")
 
-const createNewVariant = async (data) => {
-  const newVariant = new ProductVariant(data)
+const createNewVariant = async (variant) => {
+  const newVariant = new ProductVariant(variant)
   return await newVariant.save()
 }
 

@@ -7,13 +7,16 @@ const createNew = async (req, res, next) => {
       'string.empty': 'Product ID cannot be empty.',
       'string.trim': 'Product ID must not have leading or trailing spaces.',
     }),
-    size: Joi.string().trim().messages({
+    size: Joi.string().required().trim().messages({
+      'any.required': 'Size is required.',
       'string.trim': 'Size must not have leading or trailing spaces.',
     }),
-    color: Joi.string().trim().messages({
+    color: Joi.string().required().trim().messages({
+      'any.required': 'Color is required.',
       'string.trim': 'Color must not have leading or trailing spaces.',
     }),
-    stock: Joi.number().integer().min(0).default(0).messages({
+    stock: Joi.number().integer().required().min(0).default(0).messages({
+      'any.required': 'Stock is required.',
       'number.base': 'Stock must be a non-negative integer.',
       'number.integer': 'Stock must be a non-negative integer.',
       'number.min': 'Stock must be a non-negative integer.',

@@ -9,6 +9,8 @@ router.post('/create-product', /*authMiddleware.verifyAdmin,*/ upload.array('img
 router.get('/list-product', /*authMiddleware.verifyAdmin,*/ productController.getAllProducts)
 router.put('/update-product/:id', /*authMiddleware.verifyAdmin,*/ productValidation.updateProduct, upload.array('img',6), productController.updateProduct)
 router.delete('/delete-product/:id', /*authMiddleware.verifyAdmin,*/ productController.deleteProduct)
+router.get('/products/:categoryId', productController.getProductsByCategory)
+router.get('/productDetails/:id', productController.getProductDetails)
 
 const productRoute = router
 

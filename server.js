@@ -8,6 +8,7 @@ const authRoute = require('~/routes/API/authRoute')
 const categoryRoute = require('~/routes/API/categoryRoute')
 const productRoute = require('~/routes/API/productRoute')
 const variantRouter = require('~/routes/API/productVariantRoute')
+const cartRoute = require('~/routes/API/cartRoute')
 
 const host = process.env.HOST
 const port = process.env.PORT
@@ -26,7 +27,8 @@ app.use('/api/auth', authRoute)
 app.use('/api/category', categoryRoute)
 app.use('/api/product', productRoute)
 app.use('/api/product-variant', variantRouter)
+app.use('/api/cart', cartRoute)
 
 app.listen(port, () => {
-  console.log("Server is running")
+  console.log('Server is running')
 })

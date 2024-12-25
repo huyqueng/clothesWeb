@@ -27,6 +27,10 @@ const findProductById = async (productId) => {
   return await Product.findById(productId)
 }
 
+const findProductByCategory = async (categoryId) => {
+  return await Product.find({ category: categoryId })
+}
+
 const removeImg = (images) => {
   images.forEach((filePath) => {
     fs.unlink(filePath, (err) => {
@@ -52,5 +56,6 @@ module.exports = {
   findProductById,
   removeImg,
   updateProductById,
-  deleteProductById
+  deleteProductById,
+  findProductByCategory
 }

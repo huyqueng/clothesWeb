@@ -1,60 +1,60 @@
-const Joi = require('joi')
+const Joi = require('joi');
 
 const createNew = async (req, res, next) => {
-  const correctCondition = Joi.object({
+  const validationSchema = Joi.object({
     name: Joi.string().required().trim().messages({
-      'any.required': 'Tên sản phẩm là bắt buộc.',
-      'string.empty': 'Tên sản phẩm không được để trống.',
+      'any.required': 'Product name is required.',
+      'string.empty': 'Product name cannot be empty.',
     }),
     description: Joi.string().allow('').messages({
-      'any.required': 'Mô tả sản phẩm là bắt buộc.',
+      'any.required': 'Product description is required.',
     }),
     price: Joi.number().required().min(0).messages({
-      'any.required': 'Giá sản phẩm là bắt buộc.',
-      'number.empty': 'Giá sản phẩm không được để trống',
-      'number.min': 'Giá sản phẩm không được nhỏ hơn 0.',
+      'any.required': 'Product price is required.',
+      'number.empty': 'Product price cannot be empty.',
+      'number.min': 'Product price cannot be less than 0.',
     }),
     category: Joi.string().required().messages({
-      'any.required': 'Danh mục sản phẩm là bắt buộc.',
-      'string.empty': 'Danh mục sản phẩm không được để trống'
-    })
-  })
+      'any.required': 'Product category is required.',
+      'string.empty': 'Product category cannot be empty.',
+    }),
+  });
 
   try {
-    await correctCondition.validateAsync(req.body, { abortEarly: false })
-    next()
+    await validationSchema.validateAsync(req.body, { abortEarly: false });
+    next();
   } catch (error) {
     return res.status(422).json({
-    message: 'Validation Error',
-    errors: error.details.map(detail => detail.message)
-    })
+      message: 'Validation Error',
+      errors: error.details.map((detail) => detail.message),
+    });
   }
-}
+};
 
 const updateProduct = async (req, res, next) => {
-  const correctCondition = Joi.object({
+  const validationSchema = Joi.object({
     name: Joi.string().optional().trim(),
     description: Joi.string().optional().allow(''),
     price: Joi.number().optional().min(0).messages({
-      'number.min': 'Giá sản phẩm không được nhỏ hơn 0.',
+      'number.min': 'Product price cannot be less than 0.',
     }),
     category: Joi.string().optional(),
-  })
+  });
 
   try {
-    await correctCondition.validateAsync(req.body, { abortEarly: false })
-    next()
+    await validationSchema.validateAsync(req.body, { abortEarly: false });
+    next();
   } catch (error) {
     return res.status(422).json({
-    message: 'Validation Error',
-    errors: error.details.map(detail => detail.message)
-    })
+      message: 'Validation Error',
+      errors: error.details.map((detail) => detail.message),
+    });
   }
-}
+};
 
 const productValidation = {
   createNew,
-  updateProduct
-}
+  updateProduct,
+};
 
-module.exports = productValidation
+module.exports = productValidation;

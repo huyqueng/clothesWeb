@@ -1,7 +1,7 @@
 const { createNewVariant, getVariantsByProductId, updateVariantById, deleteVariantById } = require("~/services/productVariantService")
 
 const createVariant = async (req, res) => {
-  try {    
+  try {  
     const variant = await createNewVariant(req.body)
     return res.status(201).json({ message: 'Created successfully', data: variant })
   } catch (error) {
@@ -17,7 +17,7 @@ const getVariants = async (req, res) => {
     }
     const filter = { productId }
     if(size) filter.size = size
-    if(color) filter.color = color 
+    if(color) filter.color = color
     const variants = await getVariantsByProductId(filter)
     res.status(200).json({ message:'Got variants successfully', data: variants })
   } catch (error) {
@@ -43,7 +43,7 @@ const deleteVariant = async (req, res) => {
     if (!deletedVariant) {
       return res.status(400).json({ message:'Variant not found' })
     }
-    res.status(200).json({ message: 'Deleted successfully', data: deletedVariant })
+    res.status(200).json({ message: 'Deleted successfully' })
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error', error: error })
   }
