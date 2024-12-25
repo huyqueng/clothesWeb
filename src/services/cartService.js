@@ -1,9 +1,9 @@
 const Cart = require("~/models/cartModel")
 const { ProductVariant } = require("~/models/productModel")
 
+//add new item to cart
 const addNewItem = async (userId, variantId, quantity) => {
   const variant = await ProductVariant.findById(variantId).populate('productId')
-  console.log(variant)
   const price = variant.productId.price
   const productId = variant.productId
   const productName = variant.productId.name
@@ -29,7 +29,7 @@ const addNewItem = async (userId, variantId, quantity) => {
   else {
     cart.items.push({ productId, productName, img, variantId, size, color, quantity, price })
   }
-  
+  //Calculate total price
   if(cart.items.length>0)
     cart.totalPrice = calculateTotalPrice(cart.items)
   else {
@@ -38,14 +38,17 @@ const addNewItem = async (userId, variantId, quantity) => {
   return await cart.save()
 }
 
+//Calculate total price
 const calculateTotalPrice = (items) => {
   return items.reduce((total,item) => total + item.quantity * item.price, 0)
 }
 
+//Get item in cart
 const getItems = async (userId) => {
   return await Cart.findOne({ userId })
 }
 
+//Update quantity
 const updateQuantity = async (userId, variantId, newQuantity) => {
   const cart = await Cart.findOne({ userId })
   const item = cart.items.findIndex(item => item.variantId.toString() === variantId)
@@ -62,6 +65,7 @@ const updateQuantity = async (userId, variantId, newQuantity) => {
   return await cart.save()
 }
 
+//Remove item from cart
 const deleteItem = async (userId, variantId) => {
   const cart = await Cart.findOne({ userId })
   const item = cart.items.findIndex(item => item.variantId.toString() === variantId)

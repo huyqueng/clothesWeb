@@ -42,11 +42,31 @@ const deleteUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const updateUser = await updateUserById(req.params.id, req.body)
+    const updatedUser = await updateUserById(req.params.id, req.body)
     if (!updateUser) {
       return res.status(404).json({ message: 'User not found' })
     }
-    res.status(200).json({ message: 'Updated successfully', data: updateUser })
+    res.status(200).json({ message: 'Updated successfully', data: updatedUser })
+  } catch (error) {
+    res.status(500).json({ message: 'Internal Server Error', error: error })
+  }
+}
+
+const getUserInfor = async (req, res) => {
+  try {
+    const userId = req.user.id
+    const user = await findUserById(userId)
+    res.status(200).json({ success: true, data: user })
+  } catch (error) {
+    res.status(500).json({ message: 'Internal Server Error', error: error })
+  }
+}
+
+const updateMyInfor = async (req, res) => {
+  try {
+    const userId = req.user.id
+    const updatedUser = await updateUserById(userId, req.body)
+    res.status(200).json({ message: 'Updated successfully', data: updatedUser })
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error', error: error })
   }
@@ -56,7 +76,9 @@ const userController = {
   createUser,
   getAllUsers,
   deleteUser,
-  updateUser
+  updateUser,
+  getUserInfor,
+  updateMyInfor
 }
 
 module.exports = userController

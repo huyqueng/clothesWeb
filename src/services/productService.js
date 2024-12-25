@@ -31,6 +31,7 @@ const findProductByCategory = async (categoryId) => {
   return await Product.find({ category: categoryId })
 }
 
+//Alter or delete product images when a product is updated or deleted
 const removeImg = (images) => {
   images.forEach((filePath) => {
     fs.unlink(filePath, (err) => {
@@ -48,6 +49,8 @@ const updateProductById = async (productId, updateFields) => {
 const deleteProductById = async (productId) => {
   return await Product.findByIdAndDelete(productId)
 }
+
+
 
 module.exports = {
   createNewProduct,

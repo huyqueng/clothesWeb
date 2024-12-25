@@ -11,7 +11,7 @@ const createNewUser = async (user) => {
 }
 
 const findUserById = async (userId) => {
-  return await User.findById(userId)
+  return await User.findById(userId).select('-password')
 }
 
 const getUsers = async () => {
