@@ -3,6 +3,7 @@ const app = express()
 
 const connection = require('~/config/mongodb')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const userRoute = require('~/routes/API/userRoute')
 const authRoute = require('~/routes/API/authRoute')
 const categoryRoute = require('~/routes/API/categoryRoute')
@@ -17,6 +18,7 @@ const port = process.env.PORT
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser()) 
+app.use(cors())
 
 //Connect mongo
 connection();

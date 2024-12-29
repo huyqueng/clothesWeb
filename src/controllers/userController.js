@@ -55,7 +55,7 @@ const updateUser = async (req, res) => {
 const getUserInfor = async (req, res) => {
   try {
     const userId = req.user.id
-    const user = await findUserById(userId)
+    const user = await updateUserById(userId)
     res.status(200).json({ success: true, data: user })
   } catch (error) {
     res.status(500).json({ message: 'Internal Server Error', error: error })
@@ -65,6 +65,9 @@ const getUserInfor = async (req, res) => {
 const updateMyInfor = async (req, res) => {
   try {
     const userId = req.user.id
+    if (req.body.password) {
+      req.body.password = await hashPassword(req.body.password)
+    }
     const updatedUser = await updateUserById(userId, req.body)
     res.status(200).json({ message: 'Updated successfully', data: updatedUser })
   } catch (error) {
