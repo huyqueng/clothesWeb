@@ -33,7 +33,6 @@ const login = async (req, res) => {
     //Generate token
     if (user && validPassword) {
       const accessToken = generateAccessToken(user)
-      // const refreshToken = generateRefreshToken(user)
       res.cookie('accessToken', accessToken, {
         httpOnly: true,
         sameSite: 'strict',

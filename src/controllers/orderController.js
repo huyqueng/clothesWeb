@@ -1,4 +1,4 @@
-const Order = require('~/models/order');
+const Order = require('~/models/orderModel');
 const { Product } = require('~/models/productModel')
 
 //Đặt hàng
