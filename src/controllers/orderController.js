@@ -1,12 +1,13 @@
-const Order = require('../models/order');
+const Order = require('~/models/order');
+const { Product } = require('~/models/productModel')
 
-// Create a new order
+//Đặt hàng
 exports.createOrder = async (req, res) => {
   try {
     const { productId, quantity } = req.body;
     const product = await Product.findById(productId);
     if (!product) {
-      return res.status(404).json({ error: 'Product not found' });
+      return res.status(404).json({ error: 'Không tìm thấy sản phẩm' });
     }
     const totalPrice = product.price * quantity;
     const order = new Order({ product: productId, quantity, totalPrice });
@@ -17,7 +18,7 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-// Get all orders
+//Lấy danh sách toàn bộ đơn hàng
 exports.getOrders = async (req, res) => {
   try {
     const orders = await Order.find().populate('product');
@@ -27,7 +28,7 @@ exports.getOrders = async (req, res) => {
   }
 };
 
-// Update order status
+//Cập nhật trạng thái
 exports.updateOrderStatus = async (req, res) => {
   try {
     const { status } = req.body;
@@ -42,7 +43,7 @@ exports.updateOrderStatus = async (req, res) => {
   }
 };
 
-// Delete an order
+//Xóa đơn hàng
 exports.deleteOrder = async (req, res) => {
   try {
     await Order.findByIdAndDelete(req.params.id);

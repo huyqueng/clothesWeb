@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 
+//Tạo token
 const generateAccessToken = (user) => {
   return jwt.sign(
     { id: user.id, role: user.role },

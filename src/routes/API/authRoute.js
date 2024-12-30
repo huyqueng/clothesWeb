@@ -6,9 +6,6 @@ router.post('/register',userValidation.createNew , registerUser)
 router.post('/login', login)
 router.get('/logout', logout)
 
-// //Refesh
-// router.post('/refesh', reqRefeshToken)
-
 const authRoute = router
 
 module.exports = authRoute

@@ -9,10 +9,6 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, maxlength: 50 },
     address: { type: String, required: true },
     role: { type: String, enum: ['admin', 'staff', 'customer'], default: 'customer' }
-    // admin: {type: Boolean, default: false},
-    // createdAt: { type: Date, default: Date.now },
-    // updatedAt: { type: Date, default: Date.now },
-    // _destroy: { type: Boolean, default: false }
   },
   { timestamps: true }
 )

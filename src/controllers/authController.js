@@ -2,21 +2,21 @@ require('dotenv').config()
 const generateAccessToken = require('~/ultils/token')
 const { register, findUserByUsername, isPasswordValid } = require('~/services/authService')
 
-//Register
+//Đăng kí (Tạo tài khoản)
 const registerUser = async (req, res) => {
   try {
     const existingUsername = await findUserByUsername(req.body.username)
     if (existingUsername) {
-      return res.status(400).json({ message: 'Tên đăng nhập đã tồn tại vui lòng nhập tên đăng nhập khác.' })
+      return res.status(400).json({ message: 'Tên đăng nhập đã tồn tại, vui lòng nhập tên đăng nhập khác.' })
     }
     const user = await register(req.body)
     res.status(201).json({ message: 'Đăng kí thành công', data: user })
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error", error: error })
+    res.status(500).json({ message: "Lỗi hệ thống", error: error })
   }
 }
 
-//Login
+//Đăng nhập
 const login = async (req, res) => {
   try {
     const { username, password } = req.body
@@ -43,11 +43,11 @@ const login = async (req, res) => {
       res.status(200).json({ message: 'Đăng nhập thành công', ...others, accessToken })
     }
   } catch (error) {
-    res.status(500).json({ message: "Internal Server Error", error: error })
+    res.status(500).json({ message: "Lỗi hệ thống", error: error })
   }
 }
 
-//Logout
+//Đăng xuất
 const logout = (req, res) => {
   res.clearCookie('accessToken')
 }
@@ -56,5 +56,4 @@ module.exports = {
   registerUser,
   login,
   logout
-  // reqRefeshToken
 }

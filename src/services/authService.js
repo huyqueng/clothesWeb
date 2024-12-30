@@ -1,13 +1,13 @@
 const bcrypt = require('bcrypt')
 const User = require('~/models/userModel')
 
-//Hash password
+//Hàm băm mật khẩu
 const hashPassword = async (password) => {
   const salt = await bcrypt.genSalt(10)
   return await bcrypt.hash(password, salt)
 }
 
-//Register new user
+//Đăng kí người dùng
 const register = async (user) => {
   const hashed = await hashPassword(user.password)
   const newUser = await new User({
@@ -18,12 +18,12 @@ const register = async (user) => {
   return await newUser.save()
 }
 
-//Check user
+//Tìm kiếm người dùng theo username
 const findUserByUsername = async (username) => {
   return await User.findOne({ username })
 }
 
-//Check password
+//Kiểm tra mật khẩu
 const isPasswordValid = async (inputPassword, hashedPassword) => {
   return bcrypt.compare(inputPassword, hashedPassword)
 }

@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+const path = require('path')
+
 const connection = require('~/config/mongodb')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
@@ -19,8 +21,9 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cookieParser()) 
 app.use(cors())
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-//Connect mongo
+//Kết nối Mongodb
 connection();
 
 //Routes

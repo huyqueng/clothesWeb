@@ -3,9 +3,9 @@ const Joi = require('joi');
 const createNew = async (req, res, next) => {
   const correctCondition = Joi.object({
     name: Joi.string().required().max(30).trim().messages({
-      'any.required': 'The product category name is required.',
-      'string.empty': 'The product category name cannot be empty.',
-      'string.max': 'The product category name cannot exceed 30 characters.',
+      'any.required': 'Tên danh mục sản phẩm là bắt buộc.',
+      'string.empty': 'Tên danh mục sản phẩm không được để trống.',
+      'string.max': 'Tên danh mục sản phẩm không được vượt quá 30 ký tự.',
     }),
   });
 
@@ -14,7 +14,7 @@ const createNew = async (req, res, next) => {
     next();
   } catch (error) {
     return res.status(422).json({
-      message: 'Validation Error',
+      message: 'Lỗi xác thực',
       errors: error.details.map((detail) => detail.message),
     });
   }
@@ -23,7 +23,7 @@ const createNew = async (req, res, next) => {
 const updateCategory = async (req, res, next) => {
   const correctCondition = Joi.object({
     name: Joi.string().optional().max(30).trim().messages({
-      'string.max': 'The product category name cannot exceed 30 characters.',
+      'string.max': 'Tên danh mục sản phẩm không được vượt quá 30 ký tự.',
     }),
   });
 
@@ -32,7 +32,7 @@ const updateCategory = async (req, res, next) => {
     next();
   } catch (error) {
     return res.status(422).json({
-      message: 'Validation Error',
+      message: 'Lỗi xác thực',
       errors: error.details.map((detail) => detail.message),
     });
   }

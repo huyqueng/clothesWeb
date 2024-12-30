@@ -1,18 +1,18 @@
 const Cart = require("~/models/cartModel")
 const { ProductVariant } = require("~/models/productModel")
 
-//add new item to cart
+//Thêm mới item vào giỏ hàng
 const addNewItem = async (userId, variantId, quantity) => {
   const variant = await ProductVariant.findById(variantId).populate('productId')
   const price = variant.productId.price
   const productId = variant.productId
   const productName = variant.productId.name
-  const img = variant.productId.img[0]
+  const img = variant.productId.img[0] //Lấy ảnh đầu tiên trong mảng
   const size = variant.size
   const color = variant.color
   
   let cart = await Cart.findOne({ userId }).populate()
-  //Don't have any item in cart
+  //Nếu sản phẩn chưa có trong giỏ hàng 
   if (!cart) {
     cart = new Cart({
       userId, 
@@ -21,15 +21,15 @@ const addNewItem = async (userId, variantId, quantity) => {
     })
     return await cart.save()
   }
-  //Check item in cart
+  //Kiểm tra đã tồn tại sản phẩm trong giỏ hàng chưa
   const existingItem = cart.items.findIndex(item => item.variantId.toString() === variantId)
-  if (existingItem !== -1) {
-    cart.items[existingItem].quantity += quantity
+  if (existingItem !== -1) { 
+    cart.items[existingItem].quantity += quantity //Tăng số lượng lên 1
   }
   else {
     cart.items.push({ productId, productName, img, variantId, size, color, quantity, price })
   }
-  //Calculate total price
+  //Tính tổng tiền
   if(cart.items.length>0)
     cart.totalPrice = calculateTotalPrice(cart.items)
   else {
@@ -38,17 +38,17 @@ const addNewItem = async (userId, variantId, quantity) => {
   return await cart.save()
 }
 
-//Calculate total price
+//Tính tổng tiền
 const calculateTotalPrice = (items) => {
   return items.reduce((total,item) => total + item.quantity * item.price, 0)
 }
 
-//Get item in cart
+//Xem giỏ hàng
 const getItems = async (userId) => {
   return await Cart.findOne({ userId })
 }
 
-//Update quantity
+//Cập nhật giỏ hàng (sửa số lượng)
 const updateQuantity = async (userId, variantId, newQuantity) => {
   const cart = await Cart.findOne({ userId })
   const item = cart.items.findIndex(item => item.variantId.toString() === variantId)
@@ -65,7 +65,7 @@ const updateQuantity = async (userId, variantId, newQuantity) => {
   return await cart.save()
 }
 
-//Remove item from cart
+//Xóa sản phẩm khỏi giỏ hàng
 const deleteItem = async (userId, variantId) => {
   const cart = await Cart.findOne({ userId })
   const item = cart.items.findIndex(item => item.variantId.toString() === variantId)

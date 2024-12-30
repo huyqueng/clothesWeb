@@ -3,26 +3,26 @@ const Joi = require('joi');
 const createNew = async (req, res, next) => {
   const correctCondition = Joi.object({
     productId: Joi.string().required().trim().messages({
-      'any.required': 'Product ID is required.',
-      'string.empty': 'Product ID cannot be empty.',
-      'string.trim': 'Product ID must not have leading or trailing spaces.',
+      'any.required': 'Mã sản phẩm là bắt buộc.',
+      'string.empty': 'Mã sản phẩm không được để trống.',
+      'string.trim': 'Mã sản phẩm không được có khoảng trắng đầu hoặc cuối.',
     }),
     size: Joi.string().required().trim().messages({
-      'any.required': 'Size is required.',
-      'string.trim': 'Size must not have leading or trailing spaces.',
+      'any.required': 'Kích thước là bắt buộc.',
+      'string.trim': 'Kích thước không được có khoảng trắng đầu hoặc cuối.',
     }),
     color: Joi.string().required().trim().messages({
-      'any.required': 'Color is required.',
-      'string.trim': 'Color must not have leading or trailing spaces.',
+      'any.required': 'Màu sắc là bắt buộc.',
+      'string.trim': 'Màu sắc không được có khoảng trắng đầu hoặc cuối.',
     }),
     stock: Joi.number().integer().required().min(0).default(0).messages({
-      'any.required': 'Stock is required.',
-      'number.base': 'Stock must be a non-negative integer.',
-      'number.integer': 'Stock must be a non-negative integer.',
-      'number.min': 'Stock must be a non-negative integer.',
+      'any.required': 'Tồn kho là bắt buộc.',
+      'number.base': 'Tồn kho phải là một số nguyên không âm.',
+      'number.integer': 'Tồn kho phải là một số nguyên không âm.',
+      'number.min': 'Tồn kho phải là một số nguyên không âm.',
     }),
     isAccessory: Joi.boolean().default(false).messages({
-      'boolean.base': 'isAccessory must be either true or false.',
+      'boolean.base': 'isAccessory phải là true hoặc false.',
     }),
   });
 
@@ -31,7 +31,7 @@ const createNew = async (req, res, next) => {
     next();
   } catch (error) {
     return res.status(422).json({
-      message: 'Validation Error',
+      message: 'Lỗi xác thực',
       errors: error.details.map((detail) => detail.message),
     });
   }
@@ -40,20 +40,19 @@ const createNew = async (req, res, next) => {
 const updateVariant = async (req, res, next) => {
   const correctCondition = Joi.object({
     productId: Joi.string().optional().trim().messages({
-      'any.required': 'Product ID is required.',
-      'string.empty': 'Product ID cannot be empty.',
-      'string.trim': 'Product ID must not have leading or trailing spaces.',
+      'string.empty': 'Mã sản phẩm không được để trống.',
+      'string.trim': 'Mã sản phẩm không được có khoảng trắng đầu hoặc cuối.',
     }),
     size: Joi.string().optional().trim().messages({
-      'string.trim': 'Size must not have leading or trailing spaces.',
+      'string.trim': 'Kích thước không được có khoảng trắng đầu hoặc cuối.',
     }),
     color: Joi.string().optional().trim().messages({
-      'string.trim': 'Color must not have leading or trailing spaces.',
+      'string.trim': 'Màu sắc không được có khoảng trắng đầu hoặc cuối.',
     }),
     stock: Joi.number().integer().optional().min(0).messages({
-      'number.base': 'Stock must be a non-negative integer.',
-      'number.integer': 'Stock must be a non-negative integer.',
-      'number.min': 'Stock must be a non-negative integer.',
+      'number.base': 'Tồn kho phải là một số nguyên không âm.',
+      'number.integer': 'Tồn kho phải là một số nguyên không âm.',
+      'number.min': 'Tồn kho phải là một số nguyên không âm.',
     }),
     isAccessory: Joi.boolean().optional(),
   });
@@ -63,7 +62,7 @@ const updateVariant = async (req, res, next) => {
     next();
   } catch (error) {
     return res.status(422).json({
-      message: 'Validation Error',
+      message: 'Lỗi xác thực',
       errors: error.details.map((detail) => detail.message),
     });
   }
